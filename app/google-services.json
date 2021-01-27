@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "394388681650",
+    "project_id": "messaging-65a97",
+    "storage_bucket": "messaging-65a97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394388681650:android:52efabc719539dbb8e6aab",
+        "android_client_info": {
+          "package_name": "com.example.quizbay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394388681650-2h4j3u8hfh32d04ecc7i7krvgr3lqpu7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quizbay",
+            "certificate_hash": "471d883d5cd85afa51932c03c2dd8dab7be994c0"
+          }
+        },
+        {
+          "client_id": "394388681650-tej3psnbj82bcivp96q006dqh6m9mlk6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtyLRFCL1DiSJeJbBSVOGIpAPYPZ3_0JI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394388681650-tej3psnbj82bcivp96q006dqh6m9mlk6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
