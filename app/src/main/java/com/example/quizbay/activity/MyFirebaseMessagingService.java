@@ -51,7 +51,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         }
-        else
+        else if (remoteMessage.getData().containsKey("endquiz"))
+        {
+            SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(),Context.MODE_PRIVATE);
+            sharedPreferences.edit().remove(remoteMessage.getData().get("endquiz")).commit();
+        }
+        else if (remoteMessage.getData().containsKey("reminder"))
+        {
+
+        }
+        else if(remoteMessage.getData().containsKey("fastest"))
         {
 
         }

@@ -2,6 +2,7 @@ package com.example.quizbay.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -138,7 +139,7 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
                 if (!isClicked) {
                     isClicked=true;
                     Date clickTime = Calendar.getInstance().getTime();
-                    timeTaken = clickTime.getTime() - currentTime.getTime();
+                    timeTaken = clickTime.getTime() - publishingTime.getTime();
                     scoreDynamic.setTimeTaken(timeTaken);
 
                     if (correctAnswer.contains("A")) {
@@ -165,6 +166,7 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
 
                 }
                 sendScore();
+                fastestUser();
             }
         });
 
@@ -174,7 +176,7 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
                 if (!isClicked) {
                     isClicked = true;
                     Date clickTime = Calendar.getInstance().getTime();
-                    timeTaken = clickTime.getTime() - currentTime.getTime();
+                    timeTaken = clickTime.getTime() - publishingTime.getTime();
                     scoreDynamic.setTimeTaken(timeTaken);
                     //   userScore.setTimeTaken(timetaken);
                     if (correctAnswer.contains("B")) {
@@ -205,6 +207,7 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
                 }
 
                 sendScore();
+                fastestUser();
             }
         });
 
@@ -215,7 +218,7 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
                 if (!isClicked) {
                     isClicked = true;
                     Date clickTime = Calendar.getInstance().getTime();
-                    timeTaken = clickTime.getTime() - currentTime.getTime();
+                    timeTaken = clickTime.getTime() - publishingTime.getTime();
                     scoreDynamic.setTimeTaken(timeTaken);
                     if (correctAnswer.contains("C")) {
 //                        correctAnswerCount += 1;
@@ -240,8 +243,12 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
                         }
                     }
 
-
                 }
+
+                sendScore();
+
+
+                fastestUser();
             }
         });
 
@@ -251,7 +258,7 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
                 if (!isClicked) {
                     isClicked = true;
                     Date clickTime = Calendar.getInstance().getTime();
-                    timeTaken = clickTime.getTime() - currentTime.getTime();
+                    timeTaken = clickTime.getTime() - publishingTime.getTime();
                     scoreDynamic.setTimeTaken(timeTaken);
                     //  userScore.setTimeTaken(timetaken);
                     if (correctAnswer.contains("D")) {
@@ -281,12 +288,20 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
                 }
 
                 sendScore();
+
+
+               fastestUser();
             }
         });
 
 
     }
 
+    void fastestUser(){
+        Intent intentFastestUser = new Intent(this,Dynamic_Quiz_Fastest_Finger_First_User_Name.class);
+        intentFastestUser.putExtra("quizId",quizId);
+        startActivity(intentFastestUser);
+    }
 
     public String getKey(HashMap<String, String> map, String value) {
         for (HashMap.Entry<String, String> entry : map.entrySet()) {
@@ -336,6 +351,7 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
         timeRequired=question.getTimeRequired();
         tv_userScore.setVisibility(View.GONE);
         // TODO: 26/01/21 Set QuizId and userId
+        quizId=String.valueOf(question.getQuizId());
         if (question.getQuestionType().equals("text"))
         {
             iv_questionImage.setVisibility(View.GONE);
@@ -368,19 +384,21 @@ public class DynamicQuizActivity1 extends AppCompatActivity {
 
             public void onFinish() {
                 // Intent intent = new Intent(QuizDynamicQuestion.this,WaitingActivity.class);
-                scoreDynamic.setScore(0);
+                score=0;
                 scoreDynamic.setTimeTaken(timeRequired);
-                // sendScore();
+                sendScore();
+                fastestUser();
             }
         }.start();
     }
 
     public void sendScore()
     {
+        scoreDynamic.setQuizId(Integer.parseInt(quizId));
         scoreDynamic.setUserId(userId);
         Retrofit retrofit = RetrofitBuilderQuestion.getInstance();
         IQuizBayStatic iQuizBayStatic = retrofit.create(IQuizBayStatic.class);
-
+        Log.d("abc", "sendScore: "+scoreDynamic.getQuizId());
         Call<Void> voidcall = iQuizBayStatic.sendScore(scoreDynamic);
         Callback<Void> callback = new Callback<Void>() {
             @Override
